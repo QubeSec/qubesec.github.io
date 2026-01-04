@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v2
         with:
@@ -28,6 +31,16 @@ jobs:
 
       - name: Build
         run: mdbook build
+
+      - name: Inject Mermaid.js into HTML
+        shell: bash
+        run: |
+          cd book
+          for file in *.html; do
+            if grep -q '<pre class="mermaid">' "$file"; then
+              sed -i 's|</body>|<script type="module">\n    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";\n    mermaid.initialize({ startOnLoad: true, theme: "base", securityLevel: "loose" });\n    mermaid.contentLoaded();\n</script>\n</body>|g' "$file"
+            fi
+          done
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
