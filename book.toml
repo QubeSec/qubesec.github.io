@@ -6,7 +6,7 @@ title = "QubeSec"
 description = "Quantum-Safe Security for Kubernetes - Post-Quantum Cryptography Operator"
 
 [output.html]
-additional-css = ["custom.css"]
+additional-css = ["theme/custom.css"]
 default-theme = "light"
 preferred-dark-theme = "dark"
 smart-punctuation = true
