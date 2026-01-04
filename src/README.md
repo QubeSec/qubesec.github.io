@@ -389,5 +389,5 @@ QubeSec is open-source and community-driven. For support:
 
 <div style="text-align: center; margin-top: 3em; padding-top: 2em; border-top: 1px solid rgba(0, 217, 255, 0.2);">
   <p style="color: var(--text-muted);">Made with ❤️ for a quantum-safe future</p>
-  <p style="font-size: 0.9em; color: var(--text-muted);">QubeSec © 2025 | <a href="https://github.com/QubeSec/QubeSec">GitHub</a> | <a href="https://qubesec.github.io">Documentation</a></p>
+  <p style="font-size: 0.9em; color: var(--text-muted);">QubeSec © 2026 | <a href="https://github.com/QubeSec/QubeSec">GitHub</a> | <a href="https://qubesec.github.io">Documentation</a></p>
 </div>
