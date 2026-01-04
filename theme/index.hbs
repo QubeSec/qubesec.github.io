@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="favicon.svg">
+    {{#each additional_css}}
+    <link rel="stylesheet" href="{{this}}">
+    {{/each}}
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="custom.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .book {
+            flex: 1;
+        }
+        .footer-container {
+            text-align: center;
+            margin-top: 3em;
+            padding-top: 2em;
+            padding-bottom: 2em;
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+            background: var(--bg-primary);
+            color: var(--text-muted);
+        }
+        .footer-container p {
+            margin: 0.5em 0;
+        }
+        .footer-container a {
+            color: var(--qube-primary);
+        }
+    </style>
+</head>
+<body>
+    {{>header}}
+    <div id="page-wrapper" class="page-wrapper">
+        {{>sidebar}}
+        <div id="page" class="page">
+            {{>page_toc}}
+            <div class="page-inner">
+                <section class="normal" id="section-{{chapters.[0].number}}">
+                    {{{content}}}
+                </section>
+            </div>
+            {{>footer}}
+        </div>
+    </div>
+    
+    <footer class="footer-container">
+        <p style="margin: 0.5em 0;">Made with ❤️ for a quantum-safe future</p>
+        <p style="font-size: 0.9em; margin: 0.5em 0;">QubeSec © 2026 | <a href="https://github.com/QubeSec/QubeSec">GitHub</a> | <a href="https://qubesec.github.io">Documentation</a></p>
+    </footer>
+
+    {{#if livereload}}
+    <script>
+        var socket = new WebSocket("ws://127.0.0.1:3001");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                location.reload();
+            }
+        };
+        window.livereloadEnabled = true;
+    </script>
+    {{/if}}
+
+    {{#each additional_js}}
+    <script src="{{this}}"></script>
+    {{/each}}
+    <script src="book.js"></script>
+    <script src="custom.js"></script>
+</body>
+</html>
