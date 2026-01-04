@@ -46,16 +46,16 @@ Each CRD has an associated controller that:
 
 All cryptographic material is stored in Kubernetes Secrets in raw binary format:
 
-```
-QuantumKEMKeyPair (resource)
-├── alice-keypair Secret (owned)
-│   ├── public_key (binary)
-│   ├── private_key (binary)
-│   └── metadata (JSON)
-└── Status
-    ├── fingerprint: "a1b2c3d4e5"
-    ├── status: "Success"
-    └── lastUpdateTime: "2025-01-04T..."
+```mermaid
+graph TD
+    A["QuantumKEMKeyPair (resource)"] --> B["alice-keypair Secret"]
+    B --> C["public_key (binary)"]
+    B --> D["private_key (binary)"]
+    B --> E["metadata (JSON)"]
+    A --> F["Status"]
+    F --> G["fingerprint: a1b2c3d4e5"]
+    F --> H["status: Success"]
+    F --> I["lastUpdateTime: 2025-01-04"]
 ```
 
 ### Secret Structure
@@ -83,49 +83,32 @@ data:
 
 ### QuantumKEMKeyPair Reconciliation
 
-```
-1. Watch for QuantumKEMKeyPair resource changes
-   ↓
-2. Fetch existing Secret (if any)
-   ↓
-3. If Secret exists and valid
-   ├─ Update status with fingerprint
-   └─ Return (idempotent, no re-generation)
-   ↓
-4. If Secret missing
-   ├─ Generate keypair with liboqs
-   ├─ Create owned Secret
-   ├─ Calculate public key fingerprint
-   ├─ Update status with fingerprint
-   └─ Return
-   ↓
-5. If error occurs
-   ├─ Update status.error
-   └─ Requeue with exponential backoff
+```mermaid
+graph TD
+    A["Watch for QuantumKEMKeyPair changes"] --> B{"Secret exists?"}
+    B -->|Yes & Valid| C["Update status with fingerprint"]
+    C --> D["Return Idempotent"]
+    B -->|No| E["Generate keypair with liboqs"]
+    E --> F["Create owned Secret"]
+    F --> G["Calculate fingerprint"]
+    G --> H["Update status"]
+    H --> I["Return"]
+    B -->|Error| J["Update status.error"]
+    J --> K["Requeue with backoff"]
 ```
 
 ### QuantumEncapsulateSecret Reconciliation
 
-```
-1. Watch for QuantumEncapsulateSecret changes
-   ↓
-2. Fetch referenced QuantumKEMKeyPair
-   ↓
-3. Extract public key from associated Secret
-   ↓
-4. Perform encapsulation with liboqs
-   ├─ Input: public key + algorithm
-   ├─ Output: shared secret + ciphertext
-   ↓
-5. Store in output Secret
-   ├─ shared_secret (binary)
-   ├─ ciphertext (binary)
-   └─ metadata (JSON)
-   ↓
-6. Update status
-   ├─ fingerprint: SHA256(shared_secret)[0:10]
-   ├─ ciphertextFingerprint: SHA256(ciphertext)[0:10]
-   └─ status: Success
+```mermaid
+graph TD
+    A["Watch QuantumEncapsulateSecret changes"] --> B["Fetch QuantumKEMKeyPair"]
+    B --> C["Extract public key from Secret"]
+    C --> D["Perform encapsulation with liboqs"]
+    D --> E["Generate shared_secret + ciphertext"]
+    E --> F["Store in output Secret"]
+    F --> G["Calculate fingerprints"]
+    G --> H["Update status"]
+    H --> I["Success"]
 ```
 
 ---
@@ -134,98 +117,48 @@ data:
 
 ### Complete Quantum-Safe Key Exchange
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                     Alice's Namespace                    │
-├─────────────────────────────────────────────────────────┤
-│                                                          │
-│  QuantumKEMKeyPair (alice-keypair)                      │
-│  ├─ Generate Kyber1024 keypair                          │
-│  └─ Secret: [public_key | private_key]                  │
-│     └─ alice-keypair Secret                             │
-│                                                          │
-│  Public key shared with Bob ────────────────────────┐   │
-│                                                     │   │
-└─────────────────────────────────────────────────────┼─────────────────────────────────────────┐
-                                                     │                                       │
-                    ┌──────────────────────────────────┘                                       │
-                    │                                                                          │
-            ┌───────▼──────────────────────────────────────────────────────────────┐          │
-            │                     Bob's Namespace                                   │          │
-            ├────────────────────────────────────────────────────────────────────┤          │
-            │                                                                      │          │
-            │  QuantumEncapsulateSecret (bob-secret)                             │          │
-            │  ├─ Fetch Alice's public_key from alice-keypair Secret           │◄───────┘
-            │  ├─ Encapsulate: Generate SharedSecret + Ciphertext             │
-            │  └─ Secret: [shared_secret | ciphertext]                         │
-            │     └─ bob-secret Secret                                          │
-            │        ├─ Fingerprint: "a1b2c3d4e5"                              │
-            │        └─ Bob's SharedSecret ✓                                    │
-            │                                                                   │
-            │  Ciphertext sent to Alice ──────────────────────────────────┐    │
-            │                                                             │    │
-            └─────────────────────────────────────────────────────────────┼────────────────────┐
-                                                                          │                    │
-                        ┌─────────────────────────────────────────────────┘                    │
-                        │                                                                      │
-            ┌───────────▼──────────────────────────────────────────────────────────────┐     │
-            │                     Alice's Namespace (cont)                              │     │
-            ├────────────────────────────────────────────────────────────────────────┤     │
-            │                                                                         │     │
-            │  QuantumDecapsulateSecret (alice-secret)                              │     │
-            │  ├─ Fetch Alice's private_key from alice-keypair Secret             │◄────┘
-            │  ├─ Fetch Bob's ciphertext from bob-secret Secret                   │
-            │  ├─ Decapsulate: Recover SharedSecret from ciphertext              │
-            │  └─ Secret: [shared_secret]                                         │
-            │     └─ alice-secret Secret                                          │
-            │        ├─ Fingerprint: "a1b2c3d4e5"                                │
-            │        └─ Alice's SharedSecret ✓                                   │
-            │                                                                     │
-            │  ✓ RESULT: Both Alice & Bob have identical shared secrets!         │
-            │                                                                     │
-            └─────────────────────────────────────────────────────────────────────┘
-            
-            ┌─────────────────────────────────────────────────────────────────────┐
-            │         Both Namespaces: Derive Encryption Keys                     │
-            ├─────────────────────────────────────────────────────────────────────┤
-            │                                                                     │
-            │  QuantumDerivedKey (alice-aes-key)                                 │
-            │  └─ Input: alice-secret SharedSecret                              │
-            │     └─ Output: AES-256 Key ───────────────┐                       │
-            │                                            │                       │
-            │  QuantumDerivedKey (bob-aes-key)          │                       │
-            │  └─ Input: bob-secret SharedSecret       │                       │
-            │     └─ Output: AES-256 Key ───────────────┼──────┐                │
-            │                                           │      │                 │
-            │  ✓ Both AES Keys are IDENTICAL!          │      │                 │
-            │  ✓ Ready for symmetric encryption         ✓      ✓                 │
-            │                                                                    │
-            └────────────────────────────────────────────────────────────────────┘
+```mermaid
+sequenceDiagram
+    participant Alice as Alice
+    participant Bob as Bob
+    
+    Alice->>Alice: 1. Generate Kyber1024 keypair<br/>(QuantumKEMKeyPair)
+    Alice-->>Bob: 2. Share public key
+    
+    Bob->>Bob: 3. Encapsulate with Alice's public key<br/>(QuantumEncapsulateSecret)
+    Note over Bob: Generates SharedSecret + Ciphertext
+    Bob-->>Alice: 4. Send ciphertext (non-secret)
+    
+    Alice->>Alice: 5. Decapsulate using private key<br/>(QuantumDecapsulateSecret)
+    Note over Alice: Recovers SharedSecret from ciphertext
+    
+    Note over Alice,Bob: ✓ Both have identical SharedSecret!
+    
+    Alice->>Alice: 6. Derive AES-256 key<br/>(QuantumDerivedKey)
+    Bob->>Bob: 6. Derive AES-256 key<br/>(QuantumDerivedKey)
+    
+    Note over Alice,Bob: ✓ Both have identical AES-256 keys!<br/>✓ Ready for symmetric encryption
 ```
 
 ---
 
 ## Signature and Verification Flow
 
-```
-┌──────────────────────────────────────────────────┐
-│  QuantumSignatureKeyPair (signer-keys)          │
-│  ├─ Generate Dilithium3 keypair                 │
-│  └─ Secret: [public_key | private_key]          │
-│     └─ signer-keys Secret                       │
-└──────────────────────────────────────────────────┘
-         │
-         ├─ Private key used for signing
-         │   └─ QuantumSignMessage
-         │      ├─ Input: Private key + Message
-         │      ├─ Output: Signature
-         │      └─ Secret: [signature]
-         │
-         └─ Public key used for verification
-             └─ QuantumVerifySignature
-                ├─ Input: Public key + Message + Signature
-                ├─ Compare: Message fingerprints
-                └─ Output: Valid/Invalid in status
+```mermaid
+graph TD
+    A["QuantumSignatureKeyPair<br/>(signer-keys)"] --> B["Generate Dilithium3 keypair"]
+    B --> C["Private Key"]
+    B --> D["Public Key"]
+    
+    C --> E["QuantumSignMessage"]
+    E --> F["Input: Private key + Message"]
+    F --> G["Output: Signature"]
+    G --> H["Secret: signature"]
+    
+    D --> I["QuantumVerifySignature"]
+    I --> J["Input: Public key + Message + Signature"]
+    J --> K["Compare fingerprints"]
+    K --> L["Output: Valid/Invalid"]
 ```
 
 ---
@@ -234,26 +167,21 @@ data:
 
 Fingerprints provide cryptographic commitments without exposing full key material:
 
-```
-SHA256(data) → Take first 10 hex characters → Fingerprint
-
-Example:
-  Data: <1024+ bytes of key material>
-  SHA256: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6...
-  Fingerprint: a1b2c3d4e5 (10 chars)
+```mermaid
+graph LR
+    A["Key Material<br/>1024+ bytes"] --> B["SHA256 Hash"]
+    B --> C["a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6..."]
+    C --> D["Take first 10 chars"]
+    D --> E["Fingerprint: a1b2c3d4e5"]
 ```
 
 ### Usage Pattern
 
-```yaml
-QuantumKEMKeyPair Status:
-  fingerprint: "a1b2c3d4e5"  # Commitment to this specific keypair
-
-QuantumEncapsulateSecret Status:
-  fingerprint: "f6g7h8i9j0"  # Commitment to shared secret generated
-
-QuantumDecapsulateSecret Status:
-  fingerprint: "f6g7h8i9j0"  # Same fingerprint = same shared secret!
+```mermaid
+graph TD
+    A["QuantumKEMKeyPair Status"] --> B["fingerprint: a1b2c3d4e5<br/>Commitment to keypair"]
+    C["QuantumEncapsulateSecret Status"] --> D["fingerprint: f6g7h8i9j0<br/>Commitment to shared secret"]
+    E["QuantumDecapsulateSecret Status"] --> F["fingerprint: f6g7h8i9j0<br/>Same fingerprint = same secret!"]
 ```
 
 Benefits:
@@ -268,18 +196,23 @@ Benefits:
 
 Controllers implement idempotency to ensure safe reapplication:
 
-```yaml
-# First apply: Creates resources, generates keys
-kubectl apply -f key-exchange.yaml
-
-# Second apply: No changes (idempotent)
-# Controller detects Secret exists with matching content
-# Updates status, returns early without regeneration
-kubectl apply -f key-exchange.yaml
-
-# Delete and recreate: Clean regeneration
-kubectl delete qkkp alice-keypair
-kubectl apply -f key-exchange.yaml  # Generates new keypair
+```mermaid
+stateDiagram-v2
+    [*] --> FirstApply
+    FirstApply --> CreateResources: kubectl apply
+    CreateResources --> GenerateKeys
+    GenerateKeys --> Ready
+    
+    Ready --> SecondApply: kubectl apply again
+    SecondApply --> DetectExists: Secret exists?
+    DetectExists --> UpdateStatus: Yes
+    UpdateStatus --> ReadyIdempotent
+    
+    Ready --> Delete: kubectl delete
+    Delete --> Deleted
+    Deleted --> Recreate: kubectl apply
+    Recreate --> NewKeys
+    NewKeys --> Ready
 ```
 
 ---
@@ -288,24 +221,15 @@ kubectl apply -f key-exchange.yaml  # Generates new keypair
 
 Resources use Kubernetes ownership references to clean up automatically:
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: alice-keypair
-  ownerReferences:
-  - apiVersion: qubessec.io/v1
-    kind: QuantumKEMKeyPair
-    name: alice-keypair
-    uid: <uid>
-    controller: true
-    blockOwnerDeletion: true
+```mermaid
+graph TD
+    A["QuantumKEMKeyPair: alice-keypair"] -->|ownerReferences| B["Secret: alice-keypair"]
+    A -->|ownerReferences| C["Secret: alice-keypair"]
+    
+    D["Delete QuantumKEMKeyPair"] -->|triggers| E["Secret auto-deleted"]
+    F["Delete QuantumEncapsulateSecret"] -->|triggers| G["Owned Secret auto-deleted"]
+    H["Delete QuantumSignMessage"] -->|triggers| I["Owned Secret auto-deleted"]
 ```
-
-**Cleanup Behavior**:
-- Delete QuantumKEMKeyPair → Secret automatically deleted
-- Delete QuantumEncapsulateSecret → Owned Secret automatically deleted
-- Delete QuantumSignMessage → Owned Secret automatically deleted
 
 ---
 
@@ -313,32 +237,30 @@ metadata:
 
 ### Key Material Protection
 
-```
-┌─────────────────────────────────────────────┐
-│  Kubernetes Cluster (ETCD encrypted)        │
-├─────────────────────────────────────────────┤
-│  Secret: alice-keypair (encrypted at rest)  │
-│  ├─ private_key: <encrypted binary>         │
-│  ├─ public_key: <encrypted binary>          │
-│  └─ permissions: restricted by RBAC         │
-│                                             │
-│  Controller Process                        │
-│  ├─ Load Secret into memory                │
-│  ├─ Use for crypto operation               │
-│  ├─ Wipe from memory after use             │
-│  └─ Never log key material                 │
-│                                             │
-└─────────────────────────────────────────────┘
+### Key Material Protection
+
+```mermaid
+graph TD
+    A["Kubernetes Cluster"] --> B["ETCD Encrypted at Rest"]
+    B --> C["Secret: alice-keypair"]
+    C --> D["private_key: encrypted"]
+    C --> E["public_key: encrypted"]
+    C --> F["permissions: RBAC restricted"]
+    
+    A --> G["Controller Process"]
+    G --> H["1. Load Secret to memory"]
+    H --> I["2. Use for crypto"]
+    I --> J["3. Wipe from memory"]
+    J --> K["4. Never log key material"]
 ```
 
 ### Access Control
 
-```
-RBAC + Network Policies:
-├─ Signing keys restricted to authorized service accounts
-├─ Cross-namespace access requires explicit RBAC rules
-├─ Network policies limit pod-to-pod communication
-└─ Audit logs track all key access
+```mermaid
+graph TD
+    A["RBAC Rules"] --> B["Signing keys restricted<br/>to authorized service accounts"]
+    C["Network Policies"] --> D["Cross-namespace access<br/>requires explicit RBAC"]
+    E["Audit Logging"] --> F["Track all key access"]
 ```
 
 ---
@@ -364,27 +286,29 @@ RBAC + Network Policies:
 
 ### With Kubernetes Native Resources
 
-```
-QuantumCertificate
-  └─ TLS Secret (for Ingress)
-  └─ Secret (for Pod mounts)
-
-QuantumDerivedKey
-  └─ Secret (environment variables in Pods)
-  └─ ConfigMap (distributed across nodes)
-
-QuantumSignMessage
-  └─ Secret (signature verification in containers)
+```mermaid
+graph TD
+    A["QuantumCertificate"] --> B["TLS Secret"]
+    B --> C["For Ingress"]
+    A --> D["Secret for Pod mounts"]
+    
+    E["QuantumDerivedKey"] --> F["Secret"]
+    F --> G["Environment variables in Pods"]
+    E --> H["ConfigMap"]
+    H --> I["Distributed across nodes"]
+    
+    J["QuantumSignMessage"] --> K["Secret"]
+    K --> L["Signature verification in containers"]
 ```
 
 ### With External Systems
 
-```
-QubeSec Secret
-  └─ External Secret Operator
-     ├─ HashiCorp Vault
-     ├─ AWS Secrets Manager
-     └─ Google Cloud Secret Manager
+```mermaid
+graph TD
+    A["QubeSec Secret"] --> B["External Secrets Operator"]
+    B --> C["HashiCorp Vault"]
+    B --> D["AWS Secrets Manager"]
+    B --> E["Google Cloud Secret Manager"]
 ```
 
 ---

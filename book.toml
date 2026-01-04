@@ -13,7 +13,11 @@ smart-punctuation = true
 mathjax-support = true
 fold.enable = true
 
+[output.html.playground]
+
 [build]
 create-missing = false
 
 [preprocessor.links]
+
+[preprocessor.mermaid]
