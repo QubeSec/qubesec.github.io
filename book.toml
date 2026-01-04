@@ -3,3 +3,14 @@ authors = ["Shubham Tatvamasi"]
 language = "en"
 src = "src"
 title = "QubeSec"
+description = "Quantum-Safe Security for Kubernetes - Post-Quantum Cryptography Operator"
+
+[output.html]
+theme = "theme"
+default-theme = "light"
+preferred-dark-theme = "dark"
+curly-quotes = true
+mathjax-support = true
+
+[build]
+create-missing = false

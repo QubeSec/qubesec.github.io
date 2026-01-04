@@ -1,0 +1,395 @@
+/* QubeSec Custom Theme */
+
+:root {
+  /* Primary Colors - Quantum Theme */
+  --qube-primary: #00d9ff;
+  --qube-primary-dark: #00a8cc;
+  --qube-secondary: #7c3aed;
+  --qube-accent: #ec4899;
+  
+  /* Neutral Colors */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #475569;
+  
+  /* Light mode */
+  --light-bg-primary: #ffffff;
+  --light-bg-secondary: #f8fafc;
+  --light-bg-tertiary: #f1f5f9;
+  --light-text-primary: #0f172a;
+  --light-text-secondary: #334155;
+  --light-border: #e2e8f0;
+}
+
+/* Light mode */
+html[data-theme="light"],
+html:not([data-theme]) {
+  --bg-primary: var(--light-bg-primary);
+  --bg-secondary: var(--light-bg-secondary);
+  --bg-tertiary: var(--light-bg-tertiary);
+  --text-primary: var(--light-text-primary);
+  --text-secondary: var(--light-text-secondary);
+  --text-muted: #64748b;
+  --border-color: var(--light-border);
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--qube-primary) 0%, var(--qube-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: 2rem;
+  color: var(--qube-primary);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* Links */
+a {
+  color: var(--qube-primary);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+a:hover {
+  color: var(--qube-primary-dark);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+/* Code */
+code {
+  background: var(--bg-tertiary);
+  color: var(--qube-primary);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: "Fira Code", "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--bg-tertiary);
+  border-left: 4px solid var(--qube-primary);
+  padding: 1em;
+  overflow-x: auto;
+  border-radius: 6px;
+}
+
+pre code {
+  background: none;
+  color: var(--text-primary);
+  padding: 0;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid var(--qube-primary);
+  padding-left: 1em;
+  margin-left: 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1em 0;
+}
+
+table th {
+  background: var(--bg-tertiary);
+  color: var(--qube-primary);
+  padding: 0.75em;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--qube-primary);
+}
+
+table td {
+  padding: 0.75em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+table tr:hover {
+  background: var(--bg-secondary);
+}
+
+/* Buttons & CTAs */
+.btn {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  background: linear-gradient(135deg, var(--qube-primary) 0%, var(--qube-secondary) 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 217, 255, 0.5);
+}
+
+.btn-secondary {
+  background: var(--bg-tertiary);
+  color: var(--qube-primary);
+  border: 2px solid var(--qube-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--qube-primary);
+  color: var(--bg-primary);
+}
+
+/* Feature Cards */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1.5em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  border-color: var(--qube-primary);
+  box-shadow: 0 8px 25px rgba(0, 217, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.feature-card h3 {
+  color: var(--qube-primary);
+  margin-top: 0;
+}
+
+.feature-card p {
+  color: var(--text-secondary);
+  margin: 0.5em 0;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 3em 1em;
+  margin-bottom: 2em;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--qube-primary) 0%, var(--qube-secondary) 50%, var(--qube-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.5em 0;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5em;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+/* Stats Section */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--qube-primary);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.5em;
+}
+
+/* Timeline */
+.timeline {
+  margin: 2rem 0;
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 40px;
+  height: 60px;
+  border-left: 2px solid var(--qube-primary);
+}
+
+.timeline-dot {
+  width: 32px;
+  height: 32px;
+  background: var(--qube-primary);
+  border-radius: 50%;
+  margin-right: 1.5em;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-content h3 {
+  margin-top: 0;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  color: var(--qube-primary);
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px solid var(--qube-primary);
+}
+
+.badge-nist {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(124, 58, 237, 0.1));
+  border-color: var(--qube-primary);
+}
+
+/* Sidebar Navigation */
+.sidebar {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+}
+
+.sidebar a {
+  color: var(--text-secondary);
+}
+
+.sidebar a:hover {
+  color: var(--qube-primary);
+}
+
+.sidebar .active a {
+  color: var(--qube-primary);
+  border-left: 3px solid var(--qube-primary);
+  padding-left: calc(1em - 3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Dark mode tweaks */
+html[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+}
+
+/* Print styles */
+@media print {
+  a {
+    color: var(--qube-primary);
+  }
+}

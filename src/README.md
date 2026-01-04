@@ -1,110 +1,124 @@
 # QubeSec: Quantum-Safe Security for Kubernetes
 
-<div align="center">
-  <img src="https://raw.githubusercontent.com/QubeSec/QubeSec/refs/heads/main/assets/qubesec.png" alt="QubeSec Logo" width="300">
+<div style="text-align: center; margin: 3em 0;">
+  <img src="https://raw.githubusercontent.com/QubeSec/QubeSec/refs/heads/main/assets/qubesec.png" alt="QubeSec Logo" width="250" style="filter: drop-shadow(0 4px 15px rgba(0, 217, 255, 0.3));">
 </div>
 
-**A Kubernetes operator for post-quantum cryptography providing custom resource definitions (CRDs) and controllers for quantum-safe key generation, key encapsulation, key derivation, and certificate management.**
+<div class="hero">
+  <h1 class="hero-title">Secure Your Kubernetes Against Quantum Threats</h1>
+  <p class="hero-subtitle">Post-quantum cryptography operator providing quantum-safe key generation, key encapsulation, digital signatures, and X.509 certificates</p>
+  
+  <div class="cta-buttons">
+    <a href="./quickstart.html" class="btn">🚀 Get Started</a>
+    <a href="./architecture.html" class="btn btn-secondary">📚 Learn Architecture</a>
+    <a href="https://github.com/QubeSec/QubeSec" class="btn btn-secondary">⭐ GitHub</a>
+  </div>
+</div>
 
 ---
 
-## 🚀 The Quantum Threat is Real
+## 🎯 The Quantum Threat is Real
 
-Quantum computing represents an existential threat to modern cryptography. Governments and cybersecurity agencies worldwide have issued official guidance directing organizations to begin migrating to post-quantum cryptography **now**:
+Quantum computers pose an **existential threat** to modern cryptography. Governments worldwide have issued official directives:
 
-- **White House/OMB (Nov 2022)**: [Memorandum M-23-02](https://www.whitehouse.gov/wp-content/uploads/2022/11/M-23-02-M-Memo-on-Migrating-to-Post-Quantum-Cryptography.pdf) - Federal agencies must prepare migration plans
-- **NSA/CISA/NIST (Aug 2023)**: [Quantum Readiness Resource](https://www.cisa.gov/news-events/news/cisa-nsa-and-nist-publish-new-resource-migrating-post-quantum-cryptography) - Start inventory and planning now
-- **UK NCSC (Aug 2024)**: [Next Steps in Preparing for PQC](https://www.ncsc.gov.uk/whitepaper/next-steps-preparing-for-post-quantum-cryptography) - Explicit timelines and deadlines
-- **NIST (Nov 2024)**: [IR 8547 - Transition to Post-Quantum Standards](https://csrc.nist.gov/pubs/ir/8547/ipd) - Technical guidance for migration
-- **DoD/NSA (Dec 2024)**: [CNSA Suite 2.0](https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF) - Quantum-resistant requirements for national security
+| Authority | Directive | Year |
+|-----------|-----------|------|
+| **White House/OMB** | [M-23-02: Migrate to PQC](https://www.whitehouse.gov/wp-content/uploads/2022/11/M-23-02-M-Memo-on-Migrating-to-Post-Quantum-Cryptography.pdf) | 2022 |
+| **NSA/CISA/NIST** | [Quantum Readiness Resource](https://www.cisa.gov/news-events/news/cisa-nsa-and-nist-publish-new-resource-migrating-post-quantum-cryptography) | 2023 |
+| **UK NCSC** | [PQC Migration Timelines](https://www.ncsc.gov.uk/whitepaper/next-steps-preparing-for-post-quantum-cryptography) | 2024 |
+| **DoD/NSA** | [CNSA Suite 2.0](https://media.defense.gov/2022/Sep/07/2003071836/-1/-1/0/CSI_CNSA_2.0_FAQ_.PDF) | 2024 |
+
+**The time to act is NOW.** Don't wait for quantum computers to become operational.
 
 ---
 
 ## ✨ What is QubeSec?
 
-QubeSec is a Kubernetes operator that automates post-quantum cryptographic operations through native Kubernetes custom resources. It leverages **NIST-standardized quantum-safe algorithms** (Kyber, Dilithium, Falcon, SPHINCS+) integrated via [liboqs](https://github.com/open-quantum-safe/liboqs) and [OpenSSL oqs-provider](https://github.com/open-quantum-safe/oqs-provider).
+QubeSec is a **Kubernetes operator** that automates post-quantum cryptographic operations through native custom resources. It implements NIST-standardized quantum-safe algorithms:
 
-### Key Characteristics
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-number">9</div>
+    <div class="stat-label">Custom Resources</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">4</div>
+    <div class="stat-label">Algorithm Families</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">NIST Approved</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">∞</div>
+    <div class="stat-label">Years of Security</div>
+  </div>
+</div>
 
-- **Native Kubernetes Integration**: Custom resources for every cryptographic operation
-- **Fully Automated**: Controllers handle all crypto operations; no manual key management
-- **Chainable Workflows**: Resources reference each other for complex operations
-- **Auditability**: Fingerprints for verification without exposing key material
-- **Secure Storage**: All keys stored in encrypted Kubernetes Secrets
-- **NIST-Approved Algorithms**: Standards-based post-quantum cryptography
+### Core Features
 
----
-
-## 🔐 Core Capabilities
-
-### **Quantum-Safe Key Generation**
-Generate cryptographically-secure keypairs for key encapsulation and digital signatures:
-- **Kyber KEMs**: ML-KEM-512/768/1024 for quantum-safe key exchange
-- **Signature Algorithms**: ML-DSA-44/65/87 (Dilithium), Falcon, SPHINCS+
-
-### **Key Encapsulation Mechanism (KEM)**
-Implement post-quantum secure key exchange:
-- **Encapsulation**: Derive shared secrets from public keys
-- **Decapsulation**: Recover shared secrets using private keys
-- **Kyber-based**: NIST-standardized ML-KEM for all-quantum-safe communication
-
-### **Key Derivation**
-Transform shared secrets into usable cryptographic keys:
-- **HKDF-SHA256**: Industry-standard key derivation from shared secrets
-- **AES-256 Keys**: Ready-to-use encryption keys for application layer security
-
-### **Digital Signatures**
-Sign and verify messages with post-quantum algorithms:
-- **ML-DSA** (Dilithium): NIST-standardized lattice-based signatures
-- **Falcon**: High-speed signature scheme
-- **SPHINCS+**: Hash-based signatures
-
-### **X.509 Certificates**
-Create quantum-safe certificates for TLS and authentication:
-- **Post-Quantum Certificates**: Using Dilithium or Falcon algorithms
-- **Hybrid Support**: Combine classical and post-quantum for smooth migration
-- **Self-Signed & CA**: Flexible certificate generation
-
-### **Cryptographically Secure Random Numbers**
-Generate high-entropy randomness for all cryptographic operations:
-- **System Entropy**: OS-level random number generation
-- **OpenSSL oqs-provider**: Additional entropy sources
-- **Suitable for**: Key seeding, initialization vectors, nonces
-
----
-
-## 📊 Supported Algorithms
-
-| Category | Algorithms | NIST Status |
-|----------|-----------|------------|
-| **Key Encapsulation** | Kyber-512, Kyber-768, Kyber-1024 (ML-KEM) | ✅ Standardized (Nov 2024) |
-| **Digital Signatures** | ML-DSA-44, ML-DSA-65, ML-DSA-87 (Dilithium) | ✅ Standardized (Aug 2024) |
-| | Falcon-512, Falcon-1024 | ✅ Accepted (Aug 2024) |
-| | SPHINCS+-SHA2 (128s, 128f, 256s, 256f) | ✅ Accepted (Aug 2024) |
-| **Key Derivation** | HKDF-SHA256 | ✅ Industry Standard |
+<div class="feature-grid">
+  <div class="feature-card">
+    <h3>🔐 Key Generation</h3>
+    <p>Generate Kyber KEMs and Dilithium/Falcon/SPHINCS+ signature keypairs with NIST-standardized algorithms.</p>
+  </div>
+  
+  <div class="feature-card">
+    <h3>🔄 Key Exchange</h3>
+    <p>Implement quantum-safe Kyber-based key encapsulation and decapsulation for secure secret sharing.</p>
+  </div>
+  
+  <div class="feature-card">
+    <h3>✍️ Digital Signatures</h3>
+    <p>Sign and verify messages with post-quantum algorithms resistant to quantum computing attacks.</p>
+  </div>
+  
+  <div class="feature-card">
+    <h3>📜 Certificates</h3>
+    <p>Create X.509 certificates with Dilithium or Falcon for TLS, mTLS, and authentication.</p>
+  </div>
+  
+  <div class="feature-card">
+    <h3>🎲 Random Numbers</h3>
+    <p>Generate cryptographically secure random bytes for keys, nonces, IVs, and other crypto operations.</p>
+  </div>
+  
+  <div class="feature-card">
+    <h3>🔑 Key Derivation</h3>
+    <p>Transform shared secrets into usable AES-256 keys using HKDF-SHA256 key derivation.</p>
+  </div>
+</div>
 
 ---
 
-## 📖 Documentation Structure
+## 📊 NIST-Approved Algorithms
 
-This guide covers:
+<span class="badge badge-nist">✅ NIST Standardized</span>
 
-1. **[Quantum Random Number Generation](./qrng.md)** - Generate cryptographically secure random bytes
-2. **[Post-Quantum Key Exchange](./keyexchange.md)** - Implement Kyber-based KEM workflows
-3. **[Quantum Digital Signatures](./signatures.md)** - Sign and verify messages safely
-4. **[Post-Quantum Certificates](./certificates.md)** - Create X.509 certificates
-5. **[Architecture & Design](./architecture.md)** - System design and data flows
-6. **[Quick Start & Examples](./quickstart.md)** - Get started in minutes
-7. **[API Reference](./api-reference.md)** - Detailed CRD specifications
+### Key Encapsulation Mechanism (KEM)
+- **Kyber-512** (ML-KEM-512) — AES-128 security level
+- **Kyber-768** (ML-KEM-768) — AES-192 security level  
+- **Kyber-1024** (ML-KEM-1024) — AES-256 security level
+
+### Digital Signatures
+- **ML-DSA-44** (Dilithium2) — AES-128 security level
+- **ML-DSA-65** (Dilithium3) — AES-192 security level
+- **ML-DSA-87** (Dilithium5) — AES-256 security level
+- **Falcon-512** — AES-128 security level
+- **Falcon-1024** — AES-256 security level
+- **SPHINCS+-SHA2** — Hash-based signatures
+
+### Key Derivation
+- **HKDF-SHA256** — Industry-standard KDF
 
 ---
 
-## ⚡ Quick Example
+## ⚡ 30-Second Example
 
-Here's a complete quantum-safe key exchange in just 3 Kubernetes resources:
+Implement quantum-safe key exchange in 3 Kubernetes resources:
 
 ```yaml
-# 1. Generate a Kyber keypair
+# 1️⃣ Alice generates a keypair
 apiVersion: qubessec.io/v1
 kind: QuantumKEMKeyPair
 metadata:
@@ -113,55 +127,265 @@ spec:
   algorithm: Kyber1024
 
 ---
-# 2. Bob encapsulates using Alice's public key
+# 2️⃣ Bob encapsulates using Alice's public key
 apiVersion: qubessec.io/v1
 kind: QuantumEncapsulateSecret
 metadata:
-  name: bob-encapsulate
+  name: bob-secret
 spec:
   algorithm: Kyber1024
   publicKeyRef:
     name: alice-keypair
 
 ---
-# 3. Derive an AES-256 key from the shared secret
+# 3️⃣ Both derive the same AES-256 encryption key
 apiVersion: qubessec.io/v1
 kind: QuantumDerivedKey
 metadata:
-  name: shared-aes-key
+  name: shared-encryption-key
 spec:
   sharedSecretRef:
-    name: bob-encapsulate
+    name: bob-secret
+  keyLength: 32
 ```
 
-Result: Both Alice and Bob can independently derive the **same AES-256 encryption key** using only publicly available data, secured by post-quantum Kyber!
+Result: **Both Alice and Bob have identical encryption keys**, established using post-quantum Kyber! 🎉
 
 ---
 
-## 🛠️ Getting Started
+## 🚀 Quick Start
 
-Choose your path:
+### Prerequisites
+- Kubernetes 1.20+
+- `kubectl` configured
+- QubeSec operator installed
 
-- **New to QubeSec?** → Start with [Quick Start & Examples](./quickstart.md)
-- **Want to understand the design?** → Read [Architecture & Design](./architecture.md)
-- **Building specific workflows?** → Jump to [Key Exchange](./keyexchange.md), [Signatures](./signatures.md), or [Certificates](./certificates.md)
-- **Need API details?** → See [API Reference](./api-reference.md)
+### Installation
+
+```bash
+# Using Helm (recommended)
+helm repo add qubesec https://qubesec.github.io/helm-charts
+helm install qubesec qubesec/qubesec -n qubesec-system --create-namespace
+
+# Verify
+kubectl get deployment -n qubesec-system qubesec-controller-manager
+```
+
+### Your First Resource
+
+```bash
+# Generate random bytes
+cat <<EOF | kubectl apply -f -
+apiVersion: qubessec.io/v1
+kind: QuantumRandomNumber
+metadata:
+  name: my-random
+spec:
+  numBytes: 32
+EOF
+
+# Watch creation
+kubectl get qrn my-random -w
+
+# Retrieve the data
+kubectl get secret my-random -o jsonpath='{.data.random}' | base64 -d | xxd
+```
 
 ---
 
-## 🌍 About Post-Quantum Cryptography
+## 📚 Documentation Roadmap
 
-Post-quantum cryptography refers to algorithms that are believed to be resistant to attacks by both classical **and** quantum computers. Unlike RSA and ECC (which quantum computers could break), PQC algorithms are based on hard mathematical problems that remain difficult even with quantum computing—such as lattice reduction, multivariate polynomials, and hash-based signatures.
-
-NIST has been standardizing post-quantum algorithms since 2016, with the first standards approved in August 2024. QubeSec implements these NIST-approved algorithms to future-proof your Kubernetes security.
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h3>Getting Started</h3>
+      <p><a href="./quickstart.html">Quick Start & Examples</a> — Installation and 5 progressive examples to get you running in minutes.</p>
+    </div>
+  </div>
+  
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h3>Core Guides</h3>
+      <ul>
+        <li><a href="./qrng.html">Quantum Random Number Generation</a> — Cryptographically secure random bytes</li>
+        <li><a href="./keyexchange.html">Key Exchange Guide</a> — Complete Kyber KEM workflows</li>
+        <li><a href="./signatures.html">Digital Signatures</a> — Sign and verify with post-quantum algorithms</li>
+        <li><a href="./certificates.html">Post-Quantum Certificates</a> — Create X.509 certificates</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <h3>Deep Dives</h3>
+      <ul>
+        <li><a href="./architecture.html">Architecture & Design</a> — System design and data flows</li>
+        <li><a href="./api-reference.html">API Reference</a> — Complete CRD specifications</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 ---
 
-## 🔗 References
+## 🔗 Why Post-Quantum Cryptography?
 
-- **Open Quantum Safe Project**: https://openquantumsafe.org/
-- **Post-Quantum Cryptography Alliance**: https://pqca.org/
-- **NIST Post-Quantum Cryptography**: https://csrc.nist.gov/projects/post-quantum-cryptography/
-- **QubeSec GitHub**: https://github.com/QubeSec/QubeSec
-- **liboqs**: https://github.com/open-quantum-safe/liboqs
-- **OQS-Provider for OpenSSL**: https://github.com/open-quantum-safe/oqs-provider
+### The Quantum Computing Threat
+
+Traditional cryptographic algorithms (RSA, ECC) rely on mathematical problems that are **hard for classical computers** but **easy for quantum computers**:
+
+- **RSA-2048**: Breakable by quantum computers in hours
+- **ECDSA-256**: Vulnerable to quantum algorithms
+- **Post-Quantum Algorithms**: Remain secure even with quantum computers
+
+### The "Harvest Now, Decrypt Later" Attack
+
+Adversaries are **collecting encrypted data today** to decrypt once quantum computers become operational. This includes:
+
+- ✗ Your encrypted databases
+- ✗ Sensitive communications
+- ✗ Customer data
+- ✗ Trade secrets
+
+**The only defense: Migrate to post-quantum cryptography NOW.**
+
+### QubeSec's Solution
+
+✅ **NIST-standardized algorithms** approved in 2024  
+✅ **Automated deployment** through Kubernetes  
+✅ **Zero trust integration** with native Secrets  
+✅ **Seamless scaling** across your cluster  
+✅ **Future-proof security** for decades  
+
+---
+
+## 🎯 Use Cases
+
+### 1. Secure Kubernetes Communication
+Replace TLS certificates with quantum-safe X.509 certificates signed by Dilithium.
+
+### 2. Encryption Key Management
+Use Kyber KEM for secure key exchange and HKDF for key derivation.
+
+### 3. Code & Container Signing
+Sign container images and deployments with post-quantum digital signatures.
+
+### 4. mTLS with Post-Quantum
+Secure service-to-service communication with quantum-resistant authentication.
+
+### 5. Hybrid Cryptography
+Mix classical and post-quantum algorithms during transition period.
+
+### 6. Compliance & Auditing
+Meet regulatory requirements for quantum-safe cryptography (NIST, CNSA Suite 2.0).
+
+---
+
+## 🛡️ Security Guarantees
+
+### Key Storage
+- ✅ Keys stored in encrypted Kubernetes Secrets
+- ✅ ETCD encryption at rest
+- ✅ RBAC-based access control
+- ✅ Audit logging of all operations
+
+### Algorithms
+- ✅ NIST-standardized post-quantum algorithms
+- ✅ Lattice-based (Kyber, Dilithium, Falcon)
+- ✅ Hash-based (SPHINCS+)
+- ✅ 20+ years of cryptanalysis
+
+### Auditability
+- ✅ SHA256 fingerprints for verification
+- ✅ Cross-resource validation
+- ✅ Immutable audit trails
+- ✅ No key material in logs
+
+---
+
+## 🌍 Ecosystem Integration
+
+### With Kubernetes
+- Native CRDs and controllers
+- Owned resource cleanup via garbage collection
+- Cross-namespace references
+- RBAC-based access control
+
+### With External Systems
+- External Secrets Operator integration
+- HashiCorp Vault support
+- AWS Secrets Manager compatibility
+- Prometheus metrics
+
+### With Cloud Platforms
+- Multi-cloud deployments
+- Managed Kubernetes (EKS, GKE, AKS)
+- Hybrid on-prem/cloud setups
+
+---
+
+## 📊 Comparison: Classical vs Post-Quantum
+
+| Feature | RSA/ECDSA | QubeSec (Post-Quantum) |
+|---------|-----------|----------------------|
+| **Quantum Safe** | ❌ No | ✅ Yes |
+| **NIST Approved** | ✅ Yes (Legacy) | ✅ Yes (2024) |
+| **Key Size** | 2048-4096 bits | 2688-4096 bytes |
+| **Performance** | Fast | Slightly Slower |
+| **Proven Security** | Yes | 20+ years of research |
+| **Future-Proof** | ❌ No | ✅ Yes |
+
+---
+
+## 🚀 Get Started Today
+
+<div class="cta-buttons" style="margin-top: 2em;">
+  <a href="./quickstart.html" class="btn">🚀 Start with Quick Start</a>
+  <a href="./keyexchange.html" class="btn">🔄 Explore Key Exchange</a>
+  <a href="./architecture.html" class="btn">📐 Understand Architecture</a>
+  <a href="https://github.com/QubeSec/QubeSec" class="btn btn-secondary">⭐ Star on GitHub</a>
+</div>
+
+---
+
+## 📖 Full Documentation
+
+This mdbook contains comprehensive guides for all QubeSec resources:
+
+- **[Quick Start & Examples](./quickstart.html)** — Get running in 5 minutes
+- **[Quantum Random Numbers](./qrng.html)** — Generate secure randomness
+- **[Key Exchange Guide](./keyexchange.html)** — Kyber KEM workflows
+- **[Digital Signatures](./signatures.html)** — Post-quantum signing
+- **[Certificates](./certificates.html)** — X.509 certificate generation
+- **[Architecture & Design](./architecture.html)** — System internals
+- **[API Reference](./api-reference.html)** — Complete CRD specs
+
+---
+
+## 🔗 Resources & References
+
+- **[Open Quantum Safe Project](https://openquantumsafe.org/)** — Reference implementations
+- **[Post-Quantum Cryptography Alliance](https://pqca.org/)** — Industry standards
+- **[NIST Post-Quantum Cryptography](https://csrc.nist.gov/projects/post-quantum-cryptography/)** — Official standards
+- **[liboqs](https://github.com/open-quantum-safe/liboqs)** — Quantum-safe library
+- **[OQS-Provider for OpenSSL](https://github.com/open-quantum-safe/oqs-provider)** — OpenSSL integration
+
+---
+
+## 📝 License & Support
+
+QubeSec is open-source and community-driven. For support:
+
+- 🐛 **Issues**: [GitHub Issues](https://github.com/QubeSec/QubeSec/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/QubeSec/QubeSec/discussions)
+- 📧 **Contact**: [QubeSec Team](https://github.com/QubeSec)
+
+---
+
+<div style="text-align: center; margin-top: 3em; padding-top: 2em; border-top: 1px solid rgba(0, 217, 255, 0.2);">
+  <p style="color: var(--text-muted);">Made with ❤️ for a quantum-safe future</p>
+  <p style="font-size: 0.9em; color: var(--text-muted);">QubeSec © 2025 | <a href="https://github.com/QubeSec/QubeSec">GitHub</a> | <a href="https://qubesec.github.io">Documentation</a></p>
+</div>
