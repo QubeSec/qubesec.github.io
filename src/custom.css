@@ -387,6 +387,20 @@ html[data-theme="dark"] {
   --text-secondary: #cbd5e1;
 }
 
+/* Global Footer */
+body::after {
+  content: 'Made with ❤️ for a quantum-safe future\AQubeSec © 2026 | GitHub | Documentation';
+  white-space: pre-wrap;
+  display: block;
+  text-align: center;
+  margin-top: 3em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  border-top: 1px solid rgba(0, 217, 255, 0.2);
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
 /* Print styles */
 @media print {
   a {

@@ -9,7 +9,7 @@ description = "Quantum-Safe Security for Kubernetes - Post-Quantum Cryptography 
 additional-css = ["custom.css"]
 default-theme = "light"
 preferred-dark-theme = "dark"
-curly-quotes = true
+smart-punctuation = true
 mathjax-support = true
 fold.enable = true
 
