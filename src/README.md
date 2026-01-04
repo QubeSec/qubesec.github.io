@@ -36,22 +36,22 @@ Quantum computers pose an **existential threat** to modern cryptography. Governm
 
 QubeSec is a **Kubernetes operator** that automates post-quantum cryptographic operations through native custom resources. It implements NIST-standardized quantum-safe algorithms:
 
-<div class="stats">
-  <div class="stat-item">
-    <div class="stat-number">9</div>
-    <div class="stat-label">Custom Resources</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; margin: 2rem 0; padding: 2rem; background: rgba(0, 217, 255, 0.05); border-radius: 10px; border: 1px solid rgba(0, 217, 255, 0.2);">
+  <div style="text-align: center;">
+    <div style="font-size: 2.5rem; font-weight: 900; color: #00d9ff; margin-bottom: 0.5rem;">9</div>
+    <div style="font-size: 0.95rem; color: #94a3b8;">Custom Resources</div>
   </div>
-  <div class="stat-item">
-    <div class="stat-number">4</div>
-    <div class="stat-label">Algorithm Families</div>
+  <div style="text-align: center;">
+    <div style="font-size: 2.5rem; font-weight: 900; color: #00d9ff; margin-bottom: 0.5rem;">4</div>
+    <div style="font-size: 0.95rem; color: #94a3b8;">Algorithm Families</div>
   </div>
-  <div class="stat-item">
-    <div class="stat-number">100%</div>
-    <div class="stat-label">NIST Approved</div>
+  <div style="text-align: center;">
+    <div style="font-size: 2.5rem; font-weight: 900; color: #00d9ff; margin-bottom: 0.5rem;">100%</div>
+    <div style="font-size: 0.95rem; color: #94a3b8;">NIST Approved</div>
   </div>
-  <div class="stat-item">
-    <div class="stat-number">∞</div>
-    <div class="stat-label">Years of Security</div>
+  <div style="text-align: center;">
+    <div style="font-size: 2.5rem; font-weight: 900; color: #00d9ff; margin-bottom: 0.5rem;">∞</div>
+    <div style="font-size: 0.95rem; color: #94a3b8;">Years of Security</div>
   </div>
 </div>
 
