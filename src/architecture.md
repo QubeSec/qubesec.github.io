@@ -46,7 +46,7 @@ Each CRD has an associated controller that:
 
 All cryptographic material is stored in Kubernetes Secrets in raw binary format:
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["QuantumKEMKeyPair (resource)"] --> B["alice-keypair Secret"]
     B --> C["public_key (binary)"]
@@ -56,7 +56,7 @@ graph TD
     F --> G["fingerprint: a1b2c3d4e5"]
     F --> H["status: Success"]
     F --> I["lastUpdateTime: 2025-01-04"]
-```
+</div>
 
 ### Secret Structure
 
@@ -83,7 +83,7 @@ data:
 
 ### QuantumKEMKeyPair Reconciliation
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["Watch for QuantumKEMKeyPair changes"] --> B{"Secret exists?"}
     B -->|Yes & Valid| C["Update status with fingerprint"]
@@ -95,11 +95,11 @@ graph TD
     H --> I["Return"]
     B -->|Error| J["Update status.error"]
     J --> K["Requeue with backoff"]
-```
+</div>
 
 ### QuantumEncapsulateSecret Reconciliation
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["Watch QuantumEncapsulateSecret changes"] --> B["Fetch QuantumKEMKeyPair"]
     B --> C["Extract public key from Secret"]
@@ -109,7 +109,7 @@ graph TD
     F --> G["Calculate fingerprints"]
     G --> H["Update status"]
     H --> I["Success"]
-```
+</div>
 
 ---
 
@@ -117,7 +117,7 @@ graph TD
 
 ### Complete Quantum-Safe Key Exchange
 
-```mermaid
+<div class="mermaid">
 sequenceDiagram
     participant Alice as Alice
     participant Bob as Bob
@@ -138,13 +138,13 @@ sequenceDiagram
     Bob->>Bob: 6. Derive AES-256 key<br/>(QuantumDerivedKey)
     
     Note over Alice,Bob: ✓ Both have identical AES-256 keys!<br/>✓ Ready for symmetric encryption
-```
+</div>
 
 ---
 
 ## Signature and Verification Flow
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["QuantumSignatureKeyPair<br/>(signer-keys)"] --> B["Generate Dilithium3 keypair"]
     B --> C["Private Key"]
@@ -159,7 +159,7 @@ graph TD
     I --> J["Input: Public key + Message + Signature"]
     J --> K["Compare fingerprints"]
     K --> L["Output: Valid/Invalid"]
-```
+</div>
 
 ---
 
@@ -167,22 +167,22 @@ graph TD
 
 Fingerprints provide cryptographic commitments without exposing full key material:
 
-```mermaid
+<div class="mermaid">
 graph LR
     A["Key Material<br/>1024+ bytes"] --> B["SHA256 Hash"]
     B --> C["a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6..."]
     C --> D["Take first 10 chars"]
     D --> E["Fingerprint: a1b2c3d4e5"]
-```
+</div>
 
 ### Usage Pattern
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["QuantumKEMKeyPair Status"] --> B["fingerprint: a1b2c3d4e5<br/>Commitment to keypair"]
     C["QuantumEncapsulateSecret Status"] --> D["fingerprint: f6g7h8i9j0<br/>Commitment to shared secret"]
     E["QuantumDecapsulateSecret Status"] --> F["fingerprint: f6g7h8i9j0<br/>Same fingerprint = same secret!"]
-```
+</div>
 
 Benefits:
 - ✅ Verify without exposing secrets
@@ -196,7 +196,7 @@ Benefits:
 
 Controllers implement idempotency to ensure safe reapplication:
 
-```mermaid
+<div class="mermaid">
 stateDiagram-v2
     [*] --> FirstApply
     FirstApply --> CreateResources: kubectl apply
@@ -213,7 +213,7 @@ stateDiagram-v2
     Deleted --> Recreate: kubectl apply
     Recreate --> NewKeys
     NewKeys --> Ready
-```
+</div>
 
 ---
 
@@ -221,7 +221,7 @@ stateDiagram-v2
 
 Resources use Kubernetes ownership references to clean up automatically:
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["QuantumKEMKeyPair: alice-keypair"] -->|ownerReferences| B["Secret: alice-keypair"]
     A -->|ownerReferences| C["Secret: alice-keypair"]
@@ -229,7 +229,7 @@ graph TD
     D["Delete QuantumKEMKeyPair"] -->|triggers| E["Secret auto-deleted"]
     F["Delete QuantumEncapsulateSecret"] -->|triggers| G["Owned Secret auto-deleted"]
     H["Delete QuantumSignMessage"] -->|triggers| I["Owned Secret auto-deleted"]
-```
+</div>
 
 ---
 
@@ -239,7 +239,7 @@ graph TD
 
 ### Key Material Protection
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["Kubernetes Cluster"] --> B["ETCD Encrypted at Rest"]
     B --> C["Secret: alice-keypair"]
@@ -252,16 +252,16 @@ graph TD
     H --> I["2. Use for crypto"]
     I --> J["3. Wipe from memory"]
     J --> K["4. Never log key material"]
-```
+</div>
 
 ### Access Control
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["RBAC Rules"] --> B["Signing keys restricted<br/>to authorized service accounts"]
     C["Network Policies"] --> D["Cross-namespace access<br/>requires explicit RBAC"]
     E["Audit Logging"] --> F["Track all key access"]
-```
+</div>
 
 ---
 
@@ -286,7 +286,7 @@ graph TD
 
 ### With Kubernetes Native Resources
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["QuantumCertificate"] --> B["TLS Secret"]
     B --> C["For Ingress"]
@@ -299,17 +299,17 @@ graph TD
     
     J["QuantumSignMessage"] --> K["Secret"]
     K --> L["Signature verification in containers"]
-```
+</div>
 
 ### With External Systems
 
-```mermaid
+<div class="mermaid">
 graph TD
     A["QubeSec Secret"] --> B["External Secrets Operator"]
     B --> C["HashiCorp Vault"]
     B --> D["AWS Secrets Manager"]
     B --> E["Google Cloud Secret Manager"]
-```
+</div>
 
 ---
 
