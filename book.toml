@@ -11,6 +11,9 @@ default-theme = "light"
 preferred-dark-theme = "dark"
 curly-quotes = true
 mathjax-support = true
+fold.enable = true
 
 [build]
 create-missing = false
+
+[preprocessor.links]
