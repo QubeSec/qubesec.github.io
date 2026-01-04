@@ -5,6 +5,9 @@ src = "src"
 title = "QubeSec"
 description = "Quantum-Safe Security for Kubernetes - Post-Quantum Cryptography Operator"
 
+[preprocessor.mermaid]
+optional = true
+
 [output.html]
 additional-css = ["theme/custom.css"]
 default-theme = "light"
@@ -12,13 +15,3 @@ preferred-dark-theme = "dark"
 smart-punctuation = true
 mathjax-support = true
 fold.enable = true
-
-[output.html.playground]
-
-[build]
-create-missing = false
-
-[preprocessor.links]
-
-[preprocessor.mermaid]
-optional = true

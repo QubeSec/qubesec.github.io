@@ -387,6 +387,22 @@ html[data-theme="dark"] {
   --text-secondary: #cbd5e1;
 }
 
+/* Mermaid Diagram Styling */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+  padding: 1.5em;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Print styles */
 @media print {
   a {
