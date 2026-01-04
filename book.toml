@@ -21,3 +21,4 @@ create-missing = false
 [preprocessor.links]
 
 [preprocessor.mermaid]
+optional = true
