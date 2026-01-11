@@ -218,10 +218,14 @@ import CopyButton from '@site/src/components/CopyButton';
   {/* Resources Section */}
   <section className="resources-section">
     <div className="section-container">
+      <div className="section-intro">
+        <span className="section-label">Resources</span>
+        <h2 className="section-heading">Build, Learn, and Ship</h2>
+      </div>
       <div className="resources-grid">
         <div className="resource-card resource-primary">
           <div className="resource-icon">📚</div>
-          <h3>Documentation</h3>
+          <h3>Guides & Reference</h3>
           <p>Comprehensive guides and API references</p>
           <ul className="resource-links">
             <li><a href="/quickstart">Quickstart Guide</a></li>
@@ -232,7 +236,7 @@ import CopyButton from '@site/src/components/CopyButton';
 
         <div className="resource-card">
           <div className="resource-icon">💡</div>
-          <h3>Examples</h3>
+          <h3>Blueprints & Patterns</h3>
           <p>Real-world implementations and patterns</p>
           <ul className="resource-links">
             <li><a href="/keyexchange#complete-key-exchange-workflow">Key Exchange</a></li>
@@ -241,16 +245,6 @@ import CopyButton from '@site/src/components/CopyButton';
           </ul>
         </div>
 
-        <div className="resource-card">
-          <div className="resource-icon">🌟</div>
-          <h3>Community</h3>
-          <p>Join developers securing the quantum future</p>
-          <ul className="resource-links">
-            <li><a href="https://github.com/QubeSec/QubeSec" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            <li><a href="https://github.com/QubeSec/QubeSec/discussions" target="_blank" rel="noopener noreferrer">Discussions</a></li>
-            <li><a href="https://github.com/QubeSec/QubeSec/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></li>
-          </ul>
-        </div>
       </div>
     </div>
   </section>
