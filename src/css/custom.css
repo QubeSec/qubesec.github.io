@@ -1,0 +1,19 @@
+/* Docusaurus custom styles — ported from mdBook */
+@import url('../../theme/custom.css');
+@import url('../../src/custom.css');
+
+/* Docusaurus layout tweaks */
+.hero--primary .hero__title {
+  background: linear-gradient(135deg, var(--qube-primary) 0%, var(--qube-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ensure tables and code blocks fit Docusaurus theme */
+.markdown table {
+  display: table;
+}
+
+.markdown pre {
+  margin: 1rem 0;
+}
