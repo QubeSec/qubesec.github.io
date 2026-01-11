@@ -24,7 +24,7 @@ Install QubeSec operator with a single command:
 
 ```bash
 # Install the operator (CRDs, deployment, RBAC, namespace, and services)
-kubectl apply -f https://raw.githubusercontent.com/QubeSec/QubeSec/main/dist/install.yaml
+kubectl apply -f https://github.com/QubeSec/QubeSec/raw/main/dist/install.yaml
 
 # Verify installation
 kubectl get pods -n qubesec-system

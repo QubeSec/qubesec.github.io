@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function CopyButton({ text = 'kubectl apply -f https://raw.githubusercontent.com/QubeSec/QubeSec/main/dist/install.yaml' }) {
+export default function CopyButton({ text = 'kubectl apply -f https://github.com/QubeSec/QubeSec/raw/main/dist/install.yaml' }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {

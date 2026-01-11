@@ -54,9 +54,9 @@ import CopyButton from '@site/src/components/CopyButton';
             <span></span>
           </div>
           <span className="install-title">Quick Install</span>
-          <CopyButton text="kubectl apply -f https://raw.githubusercontent.com/QubeSec/QubeSec/main/dist/install.yaml" />
+          <CopyButton text="kubectl apply -f https://github.com/QubeSec/QubeSec/raw/main/dist/install.yaml" />
         </div>
-        <pre className="install-code">kubectl apply -f https://raw.githubusercontent.com/QubeSec/QubeSec/main/dist/install.yaml</pre>
+        <pre className="install-code">kubectl apply -f https://github.com/QubeSec/QubeSec/raw/main/dist/install.yaml</pre>
       </div>
     </div>
   </section>
