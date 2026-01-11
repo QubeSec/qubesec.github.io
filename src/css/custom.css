@@ -25,6 +25,16 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+/* Mobile-friendly base styles */
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 /* ==================== NEW HOMEPAGE DESIGN ==================== */
 
 .new-homepage {
@@ -391,6 +401,19 @@
   gap: 2rem;
 }
 
+/* Mobile optimization: reduce minimum column width */
+@media (max-width: 768px) {
+  .features-layout {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .features-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
 .feature-box {
   padding: 2.5rem;
   background: var(--ifm-card-background-color);
@@ -460,6 +483,20 @@
   margin-top: 3rem;
 }
 
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .use-cases-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+    margin-top: 2rem;
+  }
+}
+
 .use-case-card {
   position: relative;
   padding: 2.5rem;
@@ -524,6 +561,8 @@
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  min-height: 44px;
 }
 
 .use-case-link:hover {
@@ -541,6 +580,19 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .resources-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .resources-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .resource-card {
@@ -603,6 +655,10 @@
   text-decoration: none;
   transition: all 0.2s ease;
   display: inline-block;
+  padding: 0.25rem 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .resource-primary .resource-links a {
@@ -706,30 +762,17 @@
 
 /* Responsive Design */
 @media (max-width: 996px) {
+  .new-hero {
+    min-height: auto;
+    padding: 3rem 0;
+  }
+
+  .hero-container {
+    padding: 2rem 1.5rem;
+  }
+
   .hero-title {
-    font-size: 3rem;
-  }
-
-  .section-heading {
     font-size: 2.5rem;
-  }
-
-  .cta-title {
-    font-size: 2.5rem;
-  }
-
-  .features-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .stat-divider {
-    display: none;
-  }
-}
-
-@media (max-width: 576px) {
-  .hero-title {
-    font-size: 2.25rem;
   }
 
   .hero-subtitle {
@@ -737,16 +780,167 @@
   }
 
   .section-heading {
+    font-size: 2.25rem;
+  }
+
+  .cta-title {
+    font-size: 2.25rem;
+  }
+
+  .features-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .use-cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resources-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  .stats-container {
+    gap: 1.5rem;
+  }
+
+  .feature-box {
+    padding: 2rem;
+  }
+
+  .use-case-card {
+    padding: 2rem;
+  }
+
+  .resource-card {
+    padding: 2rem;
+  }
+
+  .final-cta {
+    padding: 5rem 2rem;
+  }
+
+  .section-intro {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
     font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .section-heading {
+    font-size: 2rem;
+  }
+
+  .section-text {
+    font-size: 1rem;
   }
 
   .cta-title {
     font-size: 2rem;
   }
 
+  .cta-text {
+    font-size: 1rem;
+  }
+
+  .stat-value {
+    font-size: 2.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .install-code {
+    font-size: 0.75rem;
+    padding: 1rem;
+  }
+
+  .install-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .features-section,
+  .use-cases-section,
+  .resources-section {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .new-hero {
+    min-height: auto;
+  }
+
+  .hero-container {
+    padding: 2rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.7rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .section-heading {
+    font-size: 1.75rem;
+  }
+
+  .section-text {
+    font-size: 0.9375rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .cta-title {
+    font-size: 1.75rem;
+  }
+
+  .cta-text {
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+  }
+
   .hero-cta,
   .cta-actions {
     flex-direction: column;
+    gap: 0.75rem;
   }
 
   .cta-primary,
@@ -755,10 +949,151 @@
   .cta-secondary-large {
     width: 100%;
     justify-content: center;
+    padding: 1rem 1.5rem;
   }
 
   .stat-value {
-    font-size: 2.5rem;
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+
+  .stats-band {
+    padding: 2.5rem 1rem;
+  }
+
+  .stats-container {
+    gap: 1.5rem;
+  }
+
+  .hero-install {
+    margin: 0 -1rem;
+    border-radius: 12px;
+  }
+
+  .install-code {
+    font-size: 0.7rem;
+    padding: 1rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .install-header {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+  }
+
+  .install-title {
+    font-size: 0.75rem;
+  }
+
+  .install-dots span {
+    width: 10px;
+    height: 10px;
+  }
+
+  .feature-box,
+  .use-case-card,
+  .resource-card {
+    padding: 1.5rem;
+  }
+
+  .feature-icon-box {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+  }
+
+  .feature-emoji {
+    font-size: 1.75rem;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+  }
+
+  .feature-desc {
+    font-size: 0.9375rem;
+  }
+
+  .use-case-number {
+    font-size: 2rem;
+  }
+
+  .use-case-content h3 {
+    font-size: 1.5rem;
+  }
+
+  .use-case-content p {
+    font-size: 0.9375rem;
+  }
+
+  .resource-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .resource-card p {
+    font-size: 0.9375rem;
+  }
+
+  .resource-icon {
+    font-size: 2rem;
+  }
+
+  .features-section,
+  .use-cases-section,
+  .resources-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .final-cta {
+    padding: 4rem 1rem;
+  }
+
+  .features-layout,
+  .use-cases-grid,
+  .resources-grid {
+    gap: 1.5rem;
+  }
+
+  /* Ensure touch-friendly spacing */
+  .hero-cta a,
+  .cta-actions a {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .section-heading {
+    font-size: 1.5rem;
+  }
+
+  .cta-title {
+    font-size: 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+  }
+
+  .install-code {
+    font-size: 0.65rem;
+  }
+
+  .feature-box,
+  .use-case-card,
+  .resource-card {
+    padding: 1.25rem;
   }
 }
 
@@ -1172,6 +1507,8 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  min-height: 44px;
 }
 
 .showcase-link:hover {
@@ -1251,7 +1588,10 @@
   color: var(--ifm-color-emphasis-700);
   text-decoration: none;
   transition: all 0.2s ease;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0;
+  min-height: 44px;
 }
 
 .docs-card-primary .docs-links a {
@@ -1329,6 +1669,10 @@
 
 /* Responsive */
 @media (max-width: 996px) {
+  .hero-section {
+    padding: 4rem 1.5rem 3rem;
+  }
+
   .hero-heading {
     font-size: 2.5rem;
   }
@@ -1354,33 +1698,254 @@
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .features-section,
+  .showcase-section,
+  .docs-section,
+  .cta-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .feature-card,
+  .docs-card,
+  .showcase-item {
+    padding: 2rem;
+  }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 3rem 1.5rem 2.5rem;
+  }
+
   .hero-heading {
     font-size: 2rem;
   }
-  
-  .hero-section {
-    padding: 4rem 1.5rem 3rem;
+
+  .hero-description {
+    font-size: 1rem;
   }
-  
-  .stats-grid {
-    grid-template-columns: 1fr;
+
+  .hero-badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
   }
-  
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .cta-heading {
+    font-size: 2rem;
+  }
+
+  .cta-description {
+    font-size: 1.125rem;
+  }
+
   .stat-number {
     font-size: 2.5rem;
   }
+
+  .stat-label {
+    font-size: 0.875rem;
+  }
+
+  .code-content {
+    font-size: 0.75rem;
+  }
+
+  .features-section,
+  .showcase-section,
+  .docs-section,
+  .cta-section {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .hero-heading {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+  
+  .hero-description {
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .cta-heading {
+    font-size: 1.75rem;
+  }
+
+  .cta-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .stats-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.8125rem;
+  }
   
   /* Keep buttons on a single row; allow horizontal scroll if needed */
-  .hero-actions {
-    flex-direction: row;
+  .hero-actions,
+  .cta-buttons {
+    flex-direction: column;
     width: 100%;
-    overflow-x: auto;
+    gap: 0.75rem;
+  }
+
+  .button,
+  .button-large {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
   }
   
   .code-content {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    padding: 1rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .code-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .hero-code {
+    margin: 0 -0.5rem;
+  }
+
+  .features-section,
+  .showcase-section,
+  .docs-section,
+  .cta-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .feature-card,
+  .docs-card,
+  .showcase-item {
+    padding: 1.5rem;
+  }
+
+  .features-grid,
+  .showcase-grid,
+  .docs-grid {
+    gap: 1.5rem;
+  }
+
+  .feature-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 1rem;
+  }
+
+  .feature-icon {
+    font-size: 1.75rem;
+  }
+
+  .feature-card h3,
+  .docs-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .feature-card p,
+  .docs-card p {
+    font-size: 0.9375rem;
+  }
+
+  .showcase-number {
+    font-size: 2.5rem;
+  }
+
+  .showcase-item h3 {
+    font-size: 1.5rem;
+  }
+
+  .showcase-item p {
+    font-size: 0.9375rem;
+  }
+
+  .docs-icon {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-heading {
+    font-size: 1.5rem;
+  }
+
+  .hero-description {
+    font-size: 0.875rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .cta-heading {
+    font-size: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.75rem;
+  }
+
+  .code-content {
+    font-size: 0.65rem;
+  }
+
+  .button,
+  .button-large {
+    font-size: 0.8125rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .feature-card,
+  .docs-card,
+  .showcase-item {
+    padding: 1.25rem;
   }
 }
