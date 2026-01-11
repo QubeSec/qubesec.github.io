@@ -99,22 +99,6 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      links: [
-        {
-          title: 'Docs',
-          items: [
-            { label: 'Quick Start', to: '/quickstart' },
-            { label: 'Architecture', to: '/architecture' },
-            { label: 'API Reference', to: '/api-reference' },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
-            { label: 'GitHub', href: 'https://github.com/QubeSec/QubeSec' },
-          ],
-        },
-      ],
       copyright: `QubeSec © ${new Date().getFullYear()} — Quantum-safe future`,
     },
     prism: {
