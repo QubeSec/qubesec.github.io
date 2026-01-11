@@ -7,16 +7,37 @@ const config: Config = {
   tagline: 'Quantum-Safe Security for Kubernetes - Post-Quantum Cryptography Operator',
   url: 'https://qubesec.github.io',
   baseUrl: '/',
-  // favicon intentionally omitted; using external logo only
+  favicon: '/img/qubesec.png',
   organizationName: 'QubeSec',
   projectName: 'qubesec.github.io',
   onBrokenLinks: 'throw',
-  markdown: {
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
-  },
   trailingSlash: true,
+  
+  // SEO Configuration
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'keywords',
+        content: 'post-quantum cryptography, kubernetes, quantum-safe, kyber, dilithium, ML-KEM, ML-DSA, NIST PQC, quantum security, kubernetes operator, cryptography',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'description',
+        content: 'QubeSec brings NIST-standardized post-quantum cryptography to Kubernetes. Secure your applications against quantum computing threats with Kyber, Dilithium, and more.',
+      },
+    },
+    {
+      tagName: 'meta',
+      attributes: {
+        property: 'og:image',
+        content: 'https://qubesec.github.io/img/qubesec.png',
+      },
+    },
+  ],
+  
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -30,28 +51,50 @@ const config: Config = {
           sidebarPath: require.resolve('./sidebars.ts'),
           showLastUpdateAuthor: false,
           showLastUpdateTime: false,
+          editUrl: 'https://github.com/QubeSec/qubesec.github.io/edit/main/',
         },
         blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        },
       } as Preset.Options,
     ],
   ],
   themeConfig: {
+    metadata: [
+      {name: 'keywords', content: 'post-quantum, cryptography, kubernetes, quantum-safe, security'},
+      {name: 'twitter:card', content: 'summary_large_image'},
+      {property: 'og:type', content: 'website'},
+      {property: 'og:site_name', content: 'QubeSec'},
+    ],
     colorMode: {
       defaultMode: 'light',
-      respectPrefersColorScheme: true,
+      respectPrefersColorScheme: false,
     },
     navbar: {
       title: 'QubeSec',
       logo: {
         alt: 'QubeSec',
-        src: 'https://raw.githubusercontent.com/QubeSec/QubeSec/refs/heads/main/assets/qubesec.png',
+        src: '/img/qubesec.png',
       },
       items: [
-        { to: '/', label: 'Docs', position: 'left' },
-        { href: 'https://github.com/QubeSec/QubeSec', label: 'GitHub', position: 'right' },
+        { to: '/quickstart', label: 'Quick Start', position: 'left' },
+        { to: '/keyexchange', label: 'Key Exchange', position: 'left' },
+        { to: '/signatures', label: 'Signatures', position: 'left' },
+        { to: '/certificates', label: 'Certificates', position: 'left' },
+        { to: '/architecture', label: 'Architecture', position: 'left' },
+        { to: '/api-reference', label: 'API', position: 'left' },
+        { 
+          href: 'https://github.com/QubeSec/QubeSec', 
+          label: 'GitHub', 
+          position: 'right' 
+        },
       ],
     },
     footer: {
@@ -75,8 +118,25 @@ const config: Config = {
       copyright: `QubeSec © ${new Date().getFullYear()} — Quantum-safe future`,
     },
     prism: {
-      theme: prismThemes.dracula,
+      theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['bash', 'yaml', 'json', 'typescript', 'nginx', 'docker'],
+    },
+  },
+  themes: [
+    '@docusaurus/theme-mermaid',
+    [
+      '@cmfcmf/docusaurus-search-local',
+      {
+        indexBlog: false,
+        indexPages: false,
+      },
+    ],
+  ],
+  markdown: {
+    mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
     },
   },
 };

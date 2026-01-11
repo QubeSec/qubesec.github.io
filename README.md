@@ -2,296 +2,212 @@
 
 Beautiful, modern documentation for [QubeSec](https://github.com/QubeSec/QubeSec) — a Kubernetes operator for post-quantum cryptography.
 
+Built with [Docusaurus 3.9](https://docusaurus.io/).
+
 ## 🚀 Quick Start
 
 ### Prerequisites
-- [mdbook](https://rust-lang.github.io/mdBook/) (install: `cargo install mdbook`)
-- Rust toolchain
+- Node.js v18+
+- npm or yarn
 
-### Build & Serve Locally
+### Local Development
 
 ```bash
-# Test locally on all interfaces (0.0.0.0)
-mdbook serve -n 0.0.0.0
+# Install dependencies
+npm install
 
-# Or just localhost
-mdbook serve
+# Start development server
+npm start
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build for Production
+
+```bash
+# Build static files
+npm run build
+
+# Test production build locally
+npm run serve
+```
 
 ## 📁 Project Structure
 
 ```
 qubesec.github.io/
-├── book.toml                 # mdbook configuration
-├── theme/
-│   ├── custom.css           # Custom quantum-themed styling
-│   └── index.html           # Theme template
-└── src/
-    ├── README.md            # Landing page (hero, features, stats)
-    ├── SUMMARY.md           # Table of contents
-    ├── quickstart.md        # Installation & 5 progressive examples
-    ├── qrng.md              # Quantum Random Number Generation guide
-    ├── keyexchange.md       # Post-Quantum Key Exchange (Kyber)
-    ├── signatures.md        # Digital Signatures guide
-    ├── certificates.md      # X.509 Certificate generation
-    ├── architecture.md      # System design & data flows
-    └── api-reference.md     # Complete CRD specifications
+├── docs/                      # Documentation markdown files
+│   ├── index.md              # Homepage (hero, features, CTA)
+│   ├── quickstart.md         # Installation & examples
+│   ├── architecture.md       # System design & data flows
+│   ├── keyexchange.md        # Post-Quantum Key Exchange (Kyber)
+│   ├── signatures.md         # Digital Signatures (Dilithium)
+│   ├── certificates.md       # X.509 Certificate generation
+│   ├── qrng.md               # Quantum Random Number Generation
+│   └── api-reference.md      # Complete CRD specifications
+├── src/
+│   └── css/
+│       └── custom.css        # Custom styling
+├── static/
+│   └── img/
+│       └── qubesec.png       # Logo and static assets
+├── docusaurus.config.ts      # Docusaurus configuration
+├── sidebars.ts               # Sidebar navigation structure
+└── package.json              # Dependencies and scripts
 ```
 
 ## 🎨 Design & Styling
 
 ### Custom Theme
 
-The documentation uses a professional **quantum-themed** color scheme:
+The documentation uses a professional **gradient-based** design:
 
-- **Primary**: Cyan (`#00d9ff`) — Represents quantum superposition
-- **Secondary**: Purple (`#7c3aed`) — Post-quantum cryptography
-- **Accent**: Pink (`#ec4899`) — Security & protection
+- **Primary**: Purple gradient (`#667eea` to `#764ba2`)
+- **Accent Colors**: Quantum-themed blues and purples
+- **Dark Mode**: Dracula theme for code blocks
+- **Light Mode**: GitHub theme for code blocks
 
 ### Features
 
-✨ **Dark Mode** — Automatic detection of user preference  
-📱 **Responsive Design** — Perfect on mobile, tablet, desktop  
+✨ **Dark/Light Mode** — Respects user preference  
+📱 **Responsive Design** — Mobile-first approach  
 🎯 **Feature Cards** — Interactive hover effects  
-📊 **Statistics Badges** — Visual metrics dashboard  
-⚡ **Smooth Animations** — Professional transitions  
+📊 **Clean Navigation** — Sidebar with collapsible sections  
+⚡ **Fast Build** — Optimized with Webpack  
 🔘 **CTA Buttons** — Clear call-to-action elements  
-🌗 **Light/Dark Themes** — Configured in `book.toml`
+🧩 **Mermaid Diagrams** — Architecture visualizations  
+🎨 **Syntax Highlighting** — Prism with multiple languages
 
-### Customizing Colors
+### Customizing Styles
 
-Edit `/theme/custom.css` to change colors:
+Edit `src/css/custom.css` to change colors and styles:
 
 ```css
 :root {
-  --qube-primary: #00d9ff;      /* Change primary color */
-  --qube-secondary: #7c3aed;    /* Change secondary color */
-  --qube-accent: #ec4899;       /* Change accent color */
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  /* ... more color variables */
 }
 ```
 
-## 📄 Documentation Sections
+## 📄 Documentation Pages
 
-### Landing Page (`README.md`)
-- Hero section with gradient title
-- Stats dashboard (9 CRDs, 4 algorithms, 100% NIST-approved)
-- Feature cards grid (6 core capabilities)
-- 30-second example with complete YAML
-- Quantum threat context with government directives
-- Use cases and security guarantees
-- Timeline-based navigation to other docs
+### Homepage (`docs/index.md`)
+- Hero section with gradient background
+- 6 feature cards highlighting QubeSec capabilities
+- Quick start guide (3 steps)
+- Resource links and community section
+- Call-to-action buttons
 
-### Guides
+### Technical Guides
 
-1. **[Quick Start](./src/quickstart.md)** (11 KB)
-   - Installation instructions
+1. **[Quick Start](./docs/quickstart.md)**
+   - Installation with kubectl
    - 5 progressive examples
-   - Common operations
-   - Troubleshooting
+   - Common operations and troubleshooting
 
-2. **[Quantum Random Numbers](./src/qrng.md)** (7.7 KB)
-   - QuantumRandomNumber CRD
+2. **[Architecture](./docs/architecture.md)**
+   - System design overview
+   - 9 CRD types with Mermaid diagrams
+   - Data flow visualization
+
+3. **[Key Exchange](./docs/keyexchange.md)**
+   - Kyber (ML-KEM-1024) implementation
+   - Complete workflows with encapsulation/decapsulation
+   - Key derivation patterns
+
+4. **[Digital Signatures](./docs/signatures.md)**
+   - Dilithium (ML-DSA) implementation
+   - Sign and verify workflows
    - Real-world examples
-   - Security considerations
-   - Fingerprinting patterns
 
-3. **[Key Exchange](./src/keyexchange.md)** (10 KB)
-   - Complete Kyber KEM workflow
-   - 5-step process with verification
-   - Cross-namespace examples
-   - Algorithm selection guide
+5. **[Certificates](./docs/certificates.md)**
+   - X.509 certificate generation
+   - Self-signed and CA-issued certificates
+   - Integration with Kubernetes Ingress
 
-4. **[Digital Signatures](./src/signatures.md)** (13 KB)
-   - Post-quantum signature algorithms
-   - CI/CD integration examples
-   - Key rotation & security
-   - Message fingerprinting
+6. **[Quantum RNG](./docs/qrng.md)**
+   - Cryptographically secure random numbers
+   - Use cases and patterns
+   - Fingerprinting and verification
 
-5. **[Certificates](./src/certificates.md)** (12 KB)
-   - Self-signed, CA, and server certificates
-   - Certificate chain management
-   - Kubernetes integration (Ingress, mTLS)
-   - Real-world production examples
-
-6. **[Architecture & Design](./src/architecture.md)** (17 KB)
-   - System overview with diagrams
-   - 9 CRDs fully documented
-   - Reconciliation flows
-   - Data storage model
-   - Security architecture
-
-7. **[API Reference](./src/api-reference.md)** (14 KB)
+7. **[API Reference](./docs/api-reference.md)**
    - Complete CRD specifications
-   - All resource fields documented
-   - Common patterns & validation
-   - Cross-namespace references
+   - Field descriptions
+   - Status conditions
 
-## 🔧 Development
+## 🚀 Deployment
 
-### Building
+### GitHub Actions
 
-```bash
-# Build the documentation
-mdbook build
+The repository uses GitHub Actions for automatic deployment to GitHub Pages:
 
-# Output is in ./book/
-ls -la book/
-```
+- Triggered on push to main branch
+- Builds with latest Node.js
+- Deploys to gh-pages branch
 
-### Testing
+### Manual Deployment
 
 ```bash
-# Watch mode with auto-reload
-mdbook watch
+# Build production files
+npm run build
 
-# Serve on specific port
-mdbook serve --port 3001
+# Deploy to GitHub Pages (requires setup)
+npm run deploy
 ```
 
-### Deployment
+## 🔧 Configuration
 
-The documentation is automatically deployed to GitHub Pages when you push:
+### Docusaurus Config (`docusaurus.config.ts`)
 
-1. Push changes to `main` branch
-2. GitHub Actions builds the site
-3. Updated at `qubesec.github.io`
+Key settings:
+- **Docs-only mode**: `routeBasePath: '/'` 
+- **Mermaid support**: Enabled via `@docusaurus/theme-mermaid`
+- **Syntax highlighting**: Bash, YAML, JSON, TypeScript, Nginx, Docker
+- **Dark theme**: Dracula for code blocks
+- **Light theme**: GitHub for code blocks
 
-## 📝 Writing Guide
+### Sidebar Configuration (`sidebars.ts`)
 
-### Markdown Conventions
+Navigation structure defining doc ordering and grouping.
 
-- Use `##` for section headers (H2)
-- Use `###` for subsections (H3)
-- Include code examples with language highlighting
-- Add tables for comparisons
-- Use lists for features/benefits
+## 📊 Content Statistics
 
-### Custom Styling Classes
-
-Available CSS classes in the theme:
-
-```markdown
-<!-- Feature Card -->
-<div class="feature-card">
-  <h3>Title</h3>
-  <p>Description</p>
-</div>
-
-<!-- Button -->
-<a href="..." class="btn">Click Me</a>
-<a href="..." class="btn btn-secondary">Secondary</a>
-
-<!-- Badge -->
-<span class="badge">Label</span>
-<span class="badge badge-nist">NIST Approved</span>
-
-<!-- Feature Grid (auto-responsive) -->
-<div class="feature-grid">
-  <div class="feature-card">...</div>
-  <div class="feature-card">...</div>
-</div>
-
-<!-- Stats Dashboard -->
-<div class="stats">
-  <div class="stat-item">
-    <div class="stat-number">9</div>
-    <div class="stat-label">Custom Resources</div>
-  </div>
-</div>
-
-<!-- Timeline -->
-<div class="timeline">
-  <div class="timeline-item">
-    <div class="timeline-dot"></div>
-    <div class="timeline-content">
-      <h3>Title</h3>
-      <p>Content</p>
-    </div>
-  </div>
-</div>
-```
-
-## 🎯 Content Statistics
-
-- **Total Pages**: 8 (1 landing + 7 guides)
-- **Total Words**: 10,800+
-- **Code Examples**: 50+
-- **Diagrams**: ASCII art flows and tables
-- **Tables**: 15+ comparison & reference tables
-- **Real-World Examples**: 15+
+- **Pages**: 8 documentation pages
+- **Code Examples**: 50+ working examples
+- **Diagrams**: Mermaid architecture diagrams
+- **CRDs**: 9 Custom Resource Definitions
+- **Algorithms**: Kyber, Dilithium, Falcon, SPHINCS+
 
 ## 🔗 Resources
 
 - **QubeSec GitHub**: https://github.com/QubeSec/QubeSec
-- **mdbook Docs**: https://rust-lang.github.io/mdBook/
-- **NIST PQC**: https://csrc.nist.gov/projects/post-quantum-cryptography/
+- **Docusaurus**: https://docusaurus.io/
+- **NIST PQC**: https://csrc.nist.gov/projects/post-quantum-cryptography
 - **Open Quantum Safe**: https://openquantumsafe.org/
-
-## 📋 Configuration
-
-### book.toml Settings
-
-```toml
-[book]
-title = "QubeSec"
-description = "Quantum-Safe Security for Kubernetes..."
-src = "src"
-
-[output.html]
-theme = "theme"                 # Use custom theme
-default-theme = "light"         # Light by default
-preferred-dark-theme = "dark"   # Dark mode option
-curly-quotes = true             # Professional quotes
-mathjax-support = true          # Math formula support
-```
-
-### Theme Customization
-
-The `/theme` directory contains:
-- `custom.css` — All styling (400+ lines)
-- `index.html` — Theme template
-
-To override mdbook defaults, ensure the theme directory structure matches mdbook's expected layout.
-
-## 🚀 Deployment
-
-### GitHub Pages
-
-1. Ensure `book.toml` exists in repository root
-2. Push to main branch
-3. GitHub Actions will automatically build and deploy
-
-### Manual Build
-
-```bash
-mdbook build
-# Upload ./book/ to any static hosting
-```
 
 ## ✅ Quality Checklist
 
-Before committing changes:
+Before committing:
 
-- [ ] All links work correctly
-- [ ] Code examples are accurate
-- [ ] Tables render properly
-- [ ] Images load correctly
-- [ ] No broken cross-references
-- [ ] Tested in light and dark modes
-- [ ] Mobile responsive (test on mobile)
-- [ ] No typos or grammar errors
+- [ ] Run `npm run build` successfully
+- [ ] Test all internal links
+- [ ] Verify code examples are accurate
+- [ ] Check responsive design on mobile
+- [ ] Validate Mermaid diagrams render
+- [ ] Test both light and dark modes
+- [ ] No console errors
 
-## 📧 Support & Contributions
+## 📧 Contributing
 
-For documentation improvements:
+To improve documentation:
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Test locally with `mdbook serve`
-5. Submit a pull request
+4. Test locally with `npm start`
+5. Build with `npm run build`
+6. Submit a pull request
 
 ## 📄 License
 

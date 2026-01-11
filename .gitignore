@@ -2,4 +2,3 @@ node_modules/
 .docusaurus/
 build/
 .DS_Store
-book
