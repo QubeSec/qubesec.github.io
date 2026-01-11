@@ -150,35 +150,35 @@ kubectl get quantum randomnumber my-random-bytes -o jsonpath='{.status.fingerpri
 
 ## Use Cases
 
-### 1. **Initialization Vectors (IVs) for Encryption**
+### 1. Initialization Vectors (IVs) for Encryption
 Generate IVs for AES-GCM or other authenticated encryption modes:
 ```yaml
 spec:
   numBytes: 12  # 96-bit IV recommended for GCM
 ```
 
-### 2. **Nonces for Protocol Handshakes**
+### 2. Nonces for Protocol Handshakes
 Generate fresh nonces for ECDH, KEM protocols, or TLS handshakes:
 ```yaml
 spec:
   numBytes: 32  # 256-bit nonce
 ```
 
-### 3. **Salt for PBKDF2 or Argon2**
+### 3. Salt for PBKDF2 or Argon2
 Generate salt for password-based key derivation:
 ```yaml
 spec:
   numBytes: 16  # 128-bit salt minimum
 ```
 
-### 4. **Challenge-Response Protocols**
+### 4. Challenge-Response Protocols
 Generate challenges in authentication flows:
 ```yaml
 spec:
   numBytes: 32  # 256-bit challenge
 ```
 
-### 5. **Entropy Pool Seeding**
+### 5. Entropy Pool Seeding
 Replenish entropy pools for other cryptographic operations:
 ```yaml
 spec:
