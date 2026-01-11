@@ -563,9 +563,12 @@
   border-color: transparent;
 }
 
-.resource-primary h3,
-.resource-primary p {
+.resource-primary h3 {
   color: white;
+}
+
+.resource-primary p {
+  color: white !important;
 }
 
 .resource-icon {
