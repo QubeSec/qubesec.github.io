@@ -305,6 +305,16 @@ body {
   white-space: nowrap;
 }
 
+.install-code a {
+  color: #818cf8;
+  text-decoration: underline;
+  transition: all 0.2s ease;
+}
+
+.install-code a:hover {
+  color: #a5b4fc;
+}
+
 /* Stats Band */
 .stats-band {
   padding: 4rem 2rem;
